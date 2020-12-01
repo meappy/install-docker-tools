@@ -1,4 +1,11 @@
-## Install packages
+## for development only
+
+## ref: https://gist.github.com/lukechilds/a83e1d7127b78fef38c2914c4ececc3c
+get_latest_release() {
+  curl --silent "https://api.github.com/repos/$1/releases/latest" | # Get latest release from GitHub api
+    grep '"tag_name":' |                                            # Get tag line
+    sed -E 's/.*"([^"]+)".*/\1/'                                    # Pluck JSON value
+}
 
 ## https://bit.ly/3l3AE2a
 sudo apt -y update
@@ -6,7 +13,6 @@ sudo apt -y update
 ## git
 sudo apt -y install \
             git \
-            npm \
             apt-transport-https \
             ca-certificates \
             curl \
@@ -15,7 +21,8 @@ sudo apt -y install \
 
 ## nodejs
 curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash - && \
-sudo apt install -y nodejs
+sudo apt -y install nodejs \
+                    npm
 
 ## yarn
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
@@ -24,10 +31,10 @@ sudo apt -y update
 sudo apt -y install yarn
 
 ## install docker
-curl https://releases.rancher.com/install-docker/19.03.sh | sudo sh
+curl https://raw.githubusercontent.com/rancher/install-docker/master/$(echo $(get_latest_release "docker/docker-ce") | cut -c2-).sh | sudo sh
 
 ## docker-compose
-sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/$(get_latest_release "docker/compose")/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
@@ -35,4 +42,4 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 sudo usermod -a -G docker ubuntu
 
 ## install npm-run-all
-npm install npm-run-all --save-dev
+yarn add npm-run-all --dev
