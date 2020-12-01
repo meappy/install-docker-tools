@@ -22,16 +22,14 @@ sudo apt -y install \
 
 ## nodejs
 curl -sL https://deb.nodesource.com/setup_current.x | sudo -E bash - \
-&& sudo apt -y install nodejs \
-                       npm
+&& sudo apt -y install nodejs
 
 ## yarn
 ## ref: https://bit.ly/3l3AE2a
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - \
-&& echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list \
-&& sudo apt -y update \
-&& sudo apt -y install yarn \
-&& yarn add npm-run-all --dev
+curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt -y update \
+&& sudo apt -y install yarn
 
 ## install docker
 curl https://raw.githubusercontent.com/rancher/install-docker/master/$(echo $(get_latest_release "docker/docker-ce") | cut -c2-).sh | sudo sh
@@ -43,3 +41,6 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 
 ## add ubuntu to docker group
 sudo usermod -a -G docker ubuntu
+
+## install all the dependencies in project
+npm install
