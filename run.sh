@@ -32,7 +32,7 @@ sudo apt -y update \
 && sudo apt -y install yarn
 
 ## install docker
-curl https://raw.githubusercontent.com/rancher/install-docker/master/$(echo $(get_latest_release "docker/docker-ce") | cut -c2-).sh | sudo sh
+curl https://releases.rancher.com/install-docker/$(echo $(get_latest_release "docker/docker-ce") | cut -c2-).sh | sudo sh
 
 ## docker-compose
 sudo curl -L "https://github.com/docker/compose/releases/download/$(get_latest_release "docker/compose")/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
