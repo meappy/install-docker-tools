@@ -11,6 +11,9 @@ get_latest_release() {
 ## update
 sudo apt -y update
 
+## set timezone (modify accordingly)
+sudo timedatectl set-timezone Australia/Adelaide 
+
 ## git
 sudo apt -y install \
             git \
