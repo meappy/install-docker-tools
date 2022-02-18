@@ -13,9 +13,9 @@ curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
 ## install k9s
 echo -e "\ninstall k9s"
-wget -qO- https://github.com/derailed/k9s/releases/download/v0.24.14/k9s_Linux_x86_64.tar.gz \
-  | tar xvzf - -C /usr/local/bin k9s \
-  && chown 0:0 /usr/local/bin/k9s
+wget -qO- $(curl -s https://api.github.com/repos/derailed/k9s/releases/latest | grep browser_download_url | cut -d '"' -f 4 | grep $(uname)_$(uname -m)) \
+  | sudo tar xvzf - -C /usr/local/bin k9s \
+  && sudo chown 0:0 /usr/local/bin/k9s
 
 ## install helm3
 echo -e "\ninstall helm3"
